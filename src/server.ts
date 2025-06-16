@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
 import appRoutes from "./globals/routes/appRoutes";
-import { CustomError } from "./globals/middlewares/error.middleware";
+import { CustomError, NotFoundException } from "./globals/middlewares/error.middleware";
 dotenv.config();
 class Server {
     private app: Application;
@@ -31,7 +31,7 @@ class Server {
     private setupGlobalErrorHandler(): void {
         // Not Found
         this.app.all("*", (req, res, next) => {
-            res.status(404).json({ message: "Route not found" });
+            return next( new NotFoundException("Route not found!!!"));
         });
 
         // Global
