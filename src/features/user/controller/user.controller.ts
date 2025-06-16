@@ -12,16 +12,14 @@ class UserController {
         //     return next(new BadRequestException("Email must be unqiue"));
         // }
         const newUser: User = await prisma.user.create({
-                data: {
-                    name,
-                    email,
-                    password,
-                    avatar
-                }
-            });
-            res.status(HTTP_STATUS.CREATED).json(newUser);
-        
-       
+            data: {
+                name,
+                email,
+                password,
+                avatar
+            }
+        });
+        res.status(HTTP_STATUS.CREATED).json(newUser);
     }
 }
 
