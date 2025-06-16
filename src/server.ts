@@ -1,8 +1,9 @@
-import express, { Application } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
 import appRoutes from "./globals/routes/appRoutes";
+import { CustomError } from "./globals/middlewares/error.middleware";
 dotenv.config();
 class Server {
     private app: Application;
@@ -28,8 +29,18 @@ class Server {
         appRoutes(this.app);
     }
     private setupGlobalErrorHandler(): void {
+        // Not Found
         this.app.all("*", (req, res, next) => {
             res.status(404).json({ message: "Route not found" });
+        });
+
+        // Global
+        this.app.use((error:any, req:Request, res:Response, next:NextFunction) => {
+            if(error instanceof CustomError){
+                res.status(error.statusCode).json(error.getErrorResponse())
+                return;
+            }
+            next();
         });
     }
 
