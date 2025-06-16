@@ -27,7 +27,11 @@ class Server {
     private setupRoutes(): void {
         appRoutes(this.app);
     }
-    private setupGlobalErrorHandler(): void { }
+    private setupGlobalErrorHandler(): void {
+        this.app.all("*", (req, res, next) => {
+            res.status(404).json({ message: "Route not found" });
+        });
+    }
 
     private startServer() {
         const PORT = parseInt(process.env.PORT!) || 3000;
