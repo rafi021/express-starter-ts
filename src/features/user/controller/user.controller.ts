@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "~/prisma";
-import { HTTP_STATUS } from "~/globals/constants/Http";
 import { User } from "generated/prisma";
+import { HTTP_STATUS } from "~/globals/constants/http";
 class UserController {
     public async createUser(req: Request, res: Response) {
         const { name, email, password, avatar } = req.body;
