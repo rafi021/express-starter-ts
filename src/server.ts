@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
+import appRoutes from "./globals/routes/appRoutes";
 dotenv.config();
 class Server {
     private app: Application;
@@ -23,7 +24,9 @@ class Server {
         this.app.use(cors());
         this.app.use(helmet());
     }
-    private setupRoutes(): void { }
+    private setupRoutes(): void {
+        appRoutes(this.app);
+    }
     private setupGlobalErrorHandler(): void { }
 
     private startServer() {
