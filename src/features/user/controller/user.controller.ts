@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { prisma } from "~/prisma";
-import { userSchemaCreate } from "../schema/user.schema";
+import { HTTP_STATUS } from "~/globals/constants/Http";
+import { User } from "generated/prisma";
 class UserController {
     public async createUser(req: Request, res: Response) {
         const { name, email, password, avatar } = req.body;
 
         // Insert into DB
-        const newUser = await prisma.user.create({
+        const newUser: User = await prisma.user.create({
             data: {
                 name,
                 email,
@@ -14,7 +15,7 @@ class UserController {
                 avatar
             }
         });
-        res.status(201).json(newUser);
+        res.status(HTTP_STATUS.CREATED).json(newUser);
     }
 }
 
