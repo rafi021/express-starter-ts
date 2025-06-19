@@ -63,12 +63,12 @@ export class InternalServerErrorException extends CustomError {
     }
 }
 
-export function asyncWrapper(callback:any){
-    return async (req:Request, res:Response, next: NextFunction) => {
+export function asyncWrapper(callback: any) {
+    return async (req: Request, res: Response, next: NextFunction) => {
         try {
             await callback(req, res, next);
         } catch (error: any) {
-            next(new InternalServerErrorException(error?.message)) 
+            next(new InternalServerErrorException(error?.message))
         }
     }
 }
