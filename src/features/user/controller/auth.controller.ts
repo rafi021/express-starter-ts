@@ -26,6 +26,11 @@ class AuthController {
             accessToken
         });
     }
+
+    public async getProfile(req: Request, res: Response, next: NextFunction) {
+        const user = await authService.getProfile(req);
+        res.status(HTTP_STATUS.OK).json(user);
+    }
 }
 
 const authController: AuthController = new AuthController();

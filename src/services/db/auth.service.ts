@@ -38,9 +38,18 @@ class AuthService {
         }
     }
 
-    // public async getProfile(req: Request, res: Response, next: NextFunction) {
-    //     const user = await prisma.user.findUniqueOrThrow({ where: { id: req.user.id } });
-    // }
+    public async getProfile(reqData: any) {
+        const { currentUser } = reqData;
+        const user = await prisma.user.findUniqueOrThrow({ where: { id: currentUser.id } });
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
+            role: user.role,
+            createdAt: user.createdAt,
+        };
+    }
 
     public isEmailUnique(email: string) {
         return prisma.user.findUnique({ where: { email } });
